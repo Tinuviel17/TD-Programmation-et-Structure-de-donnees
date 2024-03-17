@@ -1,4 +1,5 @@
 ## exercice 1/2
+# trouver le mot le plus long du lexique pouvant être écrit avec le lettres du tirage
 
 def nombre_present(mot,x):
     nombre = 0
@@ -92,7 +93,39 @@ def scrabble_bis():
     return max_score(liste)
 
 ## exercice 4
-# pas fait
+# le charactère '?' peut remplacer n'importe quelle lettre et vaut 0 point
+
+"""
+modification : créer une fonctione liste_mot qui trouve tout mot du lexique formé des lettres du tirage (avec ceux pouvant utiliser joker)
+"""
+
+def liste_mot(tirage):
+    lexique=[]# liste de tous les mots du lexique
+
+    f = open("frenchssaccent.dic",'r')
+    for ligne in f:
+        lexique.append(ligne[0:len(ligne)-1])
+    # liste est complète sans retour à la ligne
+    f.close()
+
+    liste_lexique_dans_tirage=[]
+
+    for mot in lexique:
+        count = 0 # quantité de lettre du tirage dans le mot
+        tirage_copie = list(tirage)
+        for i in range(len(mot)):
+            for j in range(len(tirage_copie)):
+                if mot[i] == tirage_copie[j] :
+                    count +=1
+                    tirage_copie = tirage_copie[0:j-1] + tirage_copie[j+1:len(tirage_copie)-1]
+        if count == len(mot) :
+            liste_lexique_dans_tirage.append(mot)
+        if count == len(mot)-1 and '?' in tirage:
+            liste_lexique_dans_tirage.append(mot)
+            # utilisation du charactère '?'
+    return (liste_lexique_dans_tirage)
+
+
 
 
 
